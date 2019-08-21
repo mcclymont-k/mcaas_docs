@@ -1,0 +1,453 @@
+openapi: "3.0.0"
+
+info:
+  version: "1.0.0"
+  title: MCaaS Documentation
+  description: |
+    # Introduction
+    Trip Ninja uses a REST API with requests and responses in JSON format. For development and testing, the pre-production url
+    is to be used. Once ready for live use, access to the production url will be provided. <br  />
+
+    Pre-Production URL: TODO
+
+    For security, Trip Ninja’s servers are only accessible from whitelisted IPs. Please contact your account manager to whitelist IPs you
+    will be using.
+
+    # Authentication
+    Trip Ninja uses Basic Authentication standards. Simply encode your username and password string using base64 and pass it in the
+    authorization headers. See the python example below on how this is done. In the example, the payload and API endpoint url are not
+    shown.
+
+    Python Example:
+
+    <pre>
+    import base64
+    auth = base64.b64encode("USERNAME:PASSWORD")
+    headers = {
+        'authorization': "Basic "+ auth,
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(payload))
+    </pre>
+
+  x-logo:
+    url: 'https://s3.amazonaws.com/tn-api-docs/tripninja_logo_dev-01.png'
+    altText: Trip Ninja logo
+
+paths:
+    /markup/:
+        post:
+            summary: "Markup"
+            description: |
+                Send an array of itineraries and we will return an array of id and markup pairs corresponding to each itinerary.
+            operationId: Markup
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/MarkupPostRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MarkupPostResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MarkupOverrideErrorCodes'
+        patch:
+            summary: "Markup Override"
+            description: |
+                This endpoint allows users to override the markup provided before.
+            operationId: MarkupOverride
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/MarkupOverrideRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MarkupOverrideResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/MarkupOverrideErrorCodes'
+
+    /profile/price/:
+        post:
+            summary: "Pricing Profile"
+            description: |
+                This endpoint allows users to notify every time a price confirmation has been made.
+            operationId: PricingProfile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ProfileRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileErrorCodes'
+
+    /profile/book/:
+        post:
+            summary: "Booking Profile"
+            description: |
+                This endpoint allows users to notify every time a trip has been booked.
+            operationId: BookingProfile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ProfileRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileErrorCodes'
+        patch:
+            summary: "Booking Cancellation Profile"
+            description: |
+                This endpoint allows users to notify every time a booking has been cancelled.
+            operationId: BookingCancellationProfile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/BookingCancellationProfileRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileErrorCodes'
+
+    /profile/ticket/:
+        post:
+            summary: "Ticketing Profile"
+            description: |
+                This endpoint allows users to notify every time a trip has been ticketed.
+            operationId: TicketingProfile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/ProfileRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProfileErrorCodes'
+
+
+components:
+  schemas:
+      MarkupPostRequest:
+          title: MarkupPostRequest
+          type: object
+          required:
+              - currency
+              - source
+              - country_code
+              - passengers
+              - itineraries
+          properties:
+              currency:
+                  type: string
+                  description: "Currency that itineraries are priced in"
+                  example: "USD"
+              source:
+                  type: string
+                  description: "Metasearch source or on-site search source."
+                  example: "skyscanner"
+              country_code:
+                  type: string
+                  description: "Country code of search site"
+                  example: "US"
+              passengers:
+                  type: object
+                  description: "Number of each passenger type. No need to pass types you aren't using."
+                  example: {'ADT' : 2, 'CHD': 1}
+                  required:
+                      - ADT
+                      - CHD
+                      - INF
+              os:
+                  type: string
+                  required: false
+                  description: "Operating system of user. Desktop/mobile/android/iOS."
+                  example: "iOS"
+              itineraries:
+                  description: "Array of itineraries."
+                  required: true
+                  type: array
+                  items:
+                      type: object
+                      required:
+                          - id
+                          - flights
+                          - base_price
+                          - taxes
+                          - fees
+                          - total_price
+                          - fare_type
+                          - gds
+                      properties:
+                          id:
+                              type: integer
+                              description: "ID"
+                              example: 1
+                          base_price:
+                              type: float
+                              description: "Base price of flights (taxes and fees not included)."
+                              example: 260.43
+                          taxes:
+                              type: float
+                              description: "Taxes on flight."
+                              example: 28.50
+                          fees:
+                              type: float
+                              description: "Fees on flight."
+                              example: 10.40
+                          total_price:
+                              type: float
+                              description: "Total price of flight (base_price, taxes and fees included)."
+                              example: 299.33
+                          gds:
+                              type: string
+                              description: "GDS source of the flight."
+                              example: "travelport"
+                          flights:
+                              description: "Array of flights that make up an itinerary."
+                              required: true
+                              type: array
+                              items:
+                                  type: object
+                                  required:
+                                      - origin
+                                      - destination
+                                      - departure_date
+                                      - arrival_date
+                                      - cabin
+                                      - carrier
+                                      - flight_number
+                                      - booking_code
+                                  properties:
+                                      origin:
+                                          type: string
+                                          description: "IATA code of origin location."
+                                          example: "JFK"
+                                      destination:
+                                          type: string
+                                          description: "IATA code of destination location."
+                                          example: "LGW"
+                                      departure_date:
+                                          type: string
+                                          description: "Departure date and time with timezone."
+                                          example: "2019-11-05T07:00:00.000-08:00"
+                                      arrival_date:
+                                          type: string
+                                          description: "Arrival date and time with timezone."
+                                          example: "2019-11-08T07:00:00.000-08:00"
+                                      cabin:
+                                          type: string
+                                          description: "Cabin class code of flight."
+                                          example: "E"
+                                      carrier:
+                                          type: string
+                                          description: "Airline carrier of the flight."
+                                          example: "AC"
+                                      flight_number:
+                                          type: integer
+                                          description: "Flight number."
+                                          example: 530
+                                      booking_code:
+                                          type: string
+                                          description: "Booking code of flight."
+                                          example: "X"
+
+      MarkupPostResponse:
+          title: Response
+          type: object
+          properties:
+              trip_id:
+                  type: string
+                  description: Unique ID for the trip.
+                  example: "6be6e72c60102bd489ac46434d4ac6c11e047ee8"
+              itineraries:
+                  type: array
+                  description: Contains JSON objects of markup and itinerary ID's.
+                  items:
+                      type: object
+                      required:
+                          - id
+                          - markup
+                      properties:
+                          id:
+                              type: integer
+                              description: "Itinerary ID"
+                              example: 1
+                          markup:
+                              type: float
+                              description: "Markup amount for itinerary."
+                              example: 5.43
+
+      ProfileRequest:
+        title: Request
+        type: object
+        required:
+            - trip_id
+            - itinerary_id
+        properties:
+            trip_id:
+                type: string
+                description: This is a unique identifier for the trip which is returned in markup(post) call.
+                example: 12387654283
+            itinerary_id:
+                type: integer
+                description: |
+                    This is the itinerary idendifier on which price confirm performed. And is returned on the
+                    markup(post) call at the itinerary level
+                example: 1
+      BookingCancellationProfileRequest:
+        title: Request
+        type: object
+        required:
+            - trip_id
+            - itinerary_id
+            - canceled
+        properties:
+            trip_id:
+                type: string
+                description: This is a unique identifier for the trip which is returned in markup(post) call.
+                example: 12387654283
+            itinerary_id:
+                type: integer
+                description: |
+                    This is the itinerary idendifier on which price confirm performed. And is returned on the
+                    markup(post) call at the itinerary level
+                example: 1
+            canceled:
+                type: boolean
+                description: Determin if the booking was canceled
+                example: true
+      ProfileResponse:
+        title: Response
+        type: object
+        properties:
+            status:
+                type: string
+                description: status code
+                example: 200
+
+      ProfileErrorCodes:
+        title: Error Codes
+        type: object
+        properties:
+            status:
+                type: string
+                description: status code
+                example: 400-3001
+            errors:
+                type: array
+                description: List of errors
+                items:
+                    type: object
+                    properties:
+                        description:
+                            type: string
+                            description: error description
+                            example: invalid itinerary ID
+                        more_info:
+                            type: string
+                            description: url to documentation for more information on the requirements
+                            example: mcaas/docs/errors/3001
+      MarkupOverrideRequest:
+        title: Request
+        type: object
+        required:
+            - trip_id
+            - itinerary_id
+        properties:
+            trip_id:
+                type: string
+                description: This is a unique identifier for the trip which is returned in markup(post) call.
+                example: 12387654283
+            itinerary_id:
+                type: integer
+                description: |
+                    This is the itinerary idendifier on which price confirm performed. And is returned on the
+                    markup(post) call at the itinerary level
+                example: 1
+      MarkupOverrideResponse:
+        title: Response
+        type: object
+        properties:
+            status:
+                type: string
+                description: status code
+                example: 200
+
+      MarkupOverrideErrorCodes:
+        title: Error Codes
+        type: object
+        properties:
+            status:
+                type: string
+                description: status code
+                example: 400-3001
+            errors:
+                type: array
+                description: List of errors
+                items:
+                    type: object
+                    properties:
+                        description:
+                            type: string
+                            description: error description
+                            example: invalid itinerary ID
+                        more_info:
+                            type: string
+                            description: url to documentation for more information on the requirements
+                            example: mcaas/docs/errors/3001
