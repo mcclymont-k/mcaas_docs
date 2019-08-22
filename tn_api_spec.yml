@@ -29,6 +29,15 @@ info:
     response = requests.post(url, headers=headers, data=json.dumps(payload))
     </pre>
 
+    # Error Codes
+    <table>
+      <tr><td>400-1001</td><td>Invalid Input</td></tr>
+      <tr><td>400-1002</td><td>cabin_class is not valid. Must be one of E, PE, BC, FC, PFC</td></tr>
+      <tr><td>400-2001</td><td>Flight dates cannot be in the past</td></tr>
+      <tr><td>400-2002</td><td>Arrival date must be after departure date</td></tr>
+      <tr><td>400-3001</td><td>itinerary_id does not exist</td></tr>
+      <tr><td>400-3002</td><td>trip_id does not exist</td></tr>
+    <table>
   x-logo:
     url: 'https://s3.amazonaws.com/tn-api-docs/tripninja_logo_dev-01.png'
     altText: Trip Ninja logo
