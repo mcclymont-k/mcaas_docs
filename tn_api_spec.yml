@@ -242,6 +242,7 @@ components:
                           - total_price
                           - fare_type
                           - gds
+                          - operating_airline
                       properties:
                           id:
                               type: integer
@@ -267,6 +268,10 @@ components:
                               type: string
                               description: "GDS source of the flight."
                               example: "travelport"
+                          operating_airline:
+                              type: string
+                              description: "Airline operating this itinerary."
+                              example: "AC"
                           flights:
                               description: "Array of flights that make up an itinerary."
                               required: true
