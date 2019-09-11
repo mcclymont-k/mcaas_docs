@@ -92,7 +92,7 @@ paths:
                                 $ref: '#/components/schemas/MarkupOverrideErrorCodes'
 
     /profile/price/:
-        post:
+        patch:
             summary: "Pricing Profile"
             description: |
                 This endpoint allows users to notify every time a price confirmation has been made.
@@ -117,7 +117,7 @@ paths:
                                 $ref: '#/components/schemas/ProfileErrorCodes'
 
     /profile/book/:
-        post:
+        patch:
             summary: "Booking Profile"
             description: |
                 This endpoint allows users to notify every time a trip has been booked.
@@ -140,6 +140,7 @@ paths:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/ProfileErrorCodes'
+    /profile/cancel/:
         patch:
             summary: "Booking Cancellation Profile"
             description: |
@@ -149,7 +150,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/BookingCancellationProfileRequest'
+                            $ref: '#/components/schemas/ProfileRequest'
             responses:
                 200:
                     description: Success
@@ -165,7 +166,7 @@ paths:
                                 $ref: '#/components/schemas/ProfileErrorCodes'
 
     /profile/ticket/:
-        post:
+        patch:
             summary: "Ticketing Profile"
             description: |
                 This endpoint allows users to notify every time a trip has been ticketed.
