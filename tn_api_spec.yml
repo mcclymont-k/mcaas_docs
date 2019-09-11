@@ -242,6 +242,7 @@ components:
                           - total_price
                           - fare_type
                           - gds
+                          - cabin
                           - operating_airline
                       properties:
                           id:
@@ -268,6 +269,10 @@ components:
                               type: string
                               description: "GDS source of the flight."
                               example: "travelport"
+                          cabin:
+                              type: string
+                              description: "Cabin class for the itinerary."
+                              example: "E"
                           operating_airline:
                               type: string
                               description: "Airline operating this itinerary."
