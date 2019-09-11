@@ -201,6 +201,7 @@ components:
               - country_code
               - passengers
               - itineraries
+              - type(new)
           properties:
               currency:
                   type: string
@@ -215,13 +216,23 @@ components:
                   description: "Country code of search site"
                   example: "US"
               passengers:
-                  type: object
+                  type: array
                   description: "Number of each passenger type. No need to pass types you aren't using."
-                  example: {'ADT' : 2, 'CHD': 1}
-                  required:
-                      - ADT
-                      - CHD
-                      - INF
+                  example: [{"type":"ADT","count":3},{"type":"CHD","count":1},]
+                  items:
+                      type: object
+                      required:
+                          - type
+                          - count
+                      properties:
+                          type:
+                              type: string
+                              description: "Passenger Type"
+                              example: "ADT"
+                          count:
+                              type: int
+                              description: "number of passenger of type"
+                              example: 2
               os:
                   type: string
                   required: false
@@ -239,7 +250,7 @@ components:
                           - base_price
                           - taxes
                           - fees
-                          - total_price
+                          - price_before_markup
                           - fare_type
                           - gds
                           - operating_airline
@@ -260,7 +271,7 @@ components:
                               type: float
                               description: "Fees on flight."
                               example: 10.40
-                          total_price:
+                          price_before_markup:
                               type: float
                               description: "Total price of flight (base_price, taxes and fees included)."
                               example: 299.33
