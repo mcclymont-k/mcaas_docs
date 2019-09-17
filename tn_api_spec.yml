@@ -35,7 +35,7 @@ info:
       <tr><td>400-1002</td><td>cabin_class is not valid. Must be one of E, PE, BC, FC, PFC</td></tr>
       <tr><td>400-2001</td><td>Flight dates cannot be in the past</td></tr>
       <tr><td>400-2002</td><td>Arrival date must be after departure date</td></tr>
-      <tr><td>400-3001</td><td>itinerary_id does not exist</td></tr>
+      <tr><td>400-3001</td><td>itinerary_reference does not exist</td></tr>
       <tr><td>400-3002</td><td>trip_id does not exist</td></tr>
     <table>
   x-logo:
@@ -246,7 +246,7 @@ components:
                   items:
                       type: object
                       required:
-                          - id
+                          - reference
                           - flights
                           - base_price
                           - taxes
@@ -256,9 +256,9 @@ components:
                           - gds
                           - operating_airline
                       properties:
-                          id:
+                          reference:
                               type: integer
-                              description: "ID"
+                              description: "Itinerary reference"
                               example: 1
                           base_price:
                               type: float
@@ -347,12 +347,12 @@ components:
                   items:
                       type: object
                       required:
-                          - id
+                          - reference
                           - markup
                       properties:
-                          id:
+                          reference:
                               type: integer
-                              description: "Itinerary ID"
+                              description: "Itinerary Reference"
                               example: 1
                           markup:
                               type: float
@@ -364,13 +364,13 @@ components:
         type: object
         required:
             - trip_id
-            - itinerary_id
+            - itinerary_reference
         properties:
             trip_id:
                 type: string
                 description: This is a unique identifier for the trip which is returned in markup(post) call.
                 example: 12387654283
-            itinerary_id:
+            itinerary_reference:
                 type: integer
                 description: |
                     This is the itinerary idendifier on which price confirm performed. And is returned on the
@@ -381,14 +381,14 @@ components:
         type: object
         required:
             - trip_id
-            - itinerary_id
+            - itinerary_reference
             - canceled
         properties:
             trip_id:
                 type: string
                 description: This is a unique identifier for the trip which is returned in markup(post) call.
                 example: 12387654283
-            itinerary_id:
+            itinerary_reference:
                 type: integer
                 description: |
                     This is the itinerary idendifier on which price confirm performed. And is returned on the
@@ -434,13 +434,13 @@ components:
         type: object
         required:
             - trip_id
-            - itinerary_id
+            - itinerary_reference
         properties:
             trip_id:
                 type: string
                 description: This is a unique identifier for the trip which is returned in markup(post) call.
                 example: 12387654283
-            itinerary_id:
+            itinerary_reference:
                 type: integer
                 description: |
                     This is the itinerary idendifier on which price confirm performed. And is returned on the
