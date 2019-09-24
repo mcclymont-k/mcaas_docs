@@ -44,6 +44,31 @@ info:
 
 
 paths:
+    /IATA/:
+        post:
+            summary: "Add IATA"
+            description: |
+                Add IATA
+            operationId: AddIATA
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/AddIATARequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateAirlineIncentiveErrorCodes'
+
     /Incentive/airline/:
         post:
             summary: "Create Airline Incentive"
@@ -84,7 +109,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/UpdateAirlineIncentiveResponse'
+                                $ref: '#/components/schemas/BasicSuccessfulResponse'
                 400:
                     description: Invalid input
                     content:
@@ -107,7 +132,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/DeleteAirlineIncentiveResponse'
+                                $ref: '#/components/schemas/BasicSuccessfulResponse'
                 400:
                     description: Invalid input
                     content:
@@ -118,6 +143,15 @@ paths:
 
 components:
   schemas:
+      BasicSuccessfulResponse:
+          title: Response
+          type: object
+          properties:
+              status:
+                  type: string
+                  description: message
+                  example: successful
+
       CreateAirlineIncentiveRequest:
           title: CreateAirlineIncentiveRequest
           type: object
@@ -206,7 +240,7 @@ components:
               status:
                   type: string
                   description: status code
-                  example: 400-1001
+                  example: 400-3004
               errors:
                   type: array
                   description: List of errors
@@ -216,7 +250,7 @@ components:
                           description:
                               type: string
                               description: error description
-                              example: applicable_iatas is not valid. Must be one of [2G3C, 123]
+                              example: Already Exist
 
       UpdateAirlineIncentiveRequest:
           title: UpdateAirlineIncentiveRequest
@@ -280,14 +314,6 @@ components:
               comment:
                   type: string
                   description: additional information
-      UpdateAirlineIncentiveResponse:
-          title: Response
-          type: object
-          properties:
-              status:
-                  type: string
-                  description: message
-                  example: successfully updated
 
       DeleteAirlineIncentiveRequest:
           title: DeleteAirlineIncentiveRequest
@@ -299,14 +325,6 @@ components:
                   type: string
                   description: "Contract reference ID"
                   example: "BA83762349"
-      DeleteAirlineIncentiveResponse:
-          title: Response
-          type: object
-          properties:
-              status:
-                  type: string
-                  description: message
-                  example: successfully deleted
       UpdateDeleteErrorCodes:
           title: Error Codes
           type: object
@@ -325,3 +343,19 @@ components:
                               type: string
                               description: error description
                               example: Contract reference ID not found
+
+      AddIATARequest:
+          title: Request
+          type: object
+          required:
+              - region
+              - iata_code
+          properties:
+              region:
+                  type: string
+                  description: "Region Name"
+                  example: "Australia"
+              iata_code:
+                  type: string
+                  description: "Region Code"
+                  example: "2G3C"
