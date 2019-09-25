@@ -1,0 +1,327 @@
+openapi: "3.0.0"
+
+info:
+  version: "1.0.0"
+  title: MCaaS Documentation
+  description: |
+    # Introduction
+    Trip Ninja uses a REST API with requests and responses in JSON format. For development and testing, the pre-production url
+    is to be used. Once ready for live use, access to the production url will be provided. <br  />
+
+    Pre-Production URL: TODO
+
+    For security, Trip Ninja’s servers are only accessible from whitelisted IPs. Please contact your account manager to whitelist IPs you
+    will be using.
+
+    # Authentication
+    Trip Ninja uses Basic Authentication standards. Simply encode your username and password string using base64 and pass it in the
+    authorization headers. See the python example below on how this is done. In the example, the payload and API endpoint url are not
+    shown.
+
+    Python Example:
+
+    <pre>
+    import base64
+    auth = base64.b64encode("USERNAME:PASSWORD")
+    headers = {
+        'authorization': "Basic "+ auth,
+    }
+    response = requests.post(url, headers=headers, data=json.dumps(payload))
+    </pre>
+
+    # Error Codes
+    <table>
+      <tr><td>400-1001</td><td>Invalid Input</td></tr>
+      <tr><td>400-1002</td><td>cabin_class is not valid. Must be one of E, PE, BC, FC, PFC</td></tr>
+      <tr><td>400-2001</td><td>Flight dates cannot be in the past</td></tr>
+      <tr><td>400-2002</td><td>Arrival date must be after departure date</td></tr>
+      <tr><td>400-3001</td><td>itinerary_reference does not exist</td></tr>
+      <tr><td>400-3002</td><td>trip_id does not exist</td></tr>
+    <table>
+  x-logo:
+    url: 'https://s3.amazonaws.com/tn-api-docs/tripninja_logo_dev-01.png'
+    altText: Trip Ninja logo
+
+
+paths:
+    /Incentive/airline/:
+        post:
+            summary: "Create Airline Incentive"
+            description: |
+                Save an Airline Incentive
+            operationId: CreateAirlineIncentive
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/CreateAirlineIncentiveRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateAirlineIncentiveResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/CreateAirlineIncentiveErrorCodes'
+        patch:
+            summary: "Update Airline Incentive"
+            description: |
+                Update an Airline Incentive
+            operationId: UpdateAirlineIncentive
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UpdateAirlineIncentiveRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateAirlineIncentiveResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateDeleteErrorCodes'
+        delete:
+            summary: "Delete Airline Incentive"
+            description: |
+                Delete an Airline Incentive
+            operationId: DeleteAirlineIncentive
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/DeleteAirlineIncentiveRequest'
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/DeleteAirlineIncentiveResponse'
+                400:
+                    description: Invalid input
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UpdateDeleteErrorCodes'
+
+
+components:
+  schemas:
+      CreateAirlineIncentiveRequest:
+          title: CreateAirlineIncentiveRequest
+          type: object
+          required:
+              - airline
+              - contract_applies_to
+              - contract_start_date
+              - contract_end_date
+              - currency
+              - target
+              - target_calculation
+              - incentive_amount
+              - incentive_model
+              - applicable_iatas
+          properties:
+              airline:
+                  type: string
+                  minLength: 2
+                  maxLength: 2
+                  description: "Airline that contract is for"
+                  example: "BA"
+              contract_applies_to:
+                  type: string
+                  enum: [FLOWN, BOOKED]
+                  description: "Flight status this contract applies to. "
+                  example: "flown"
+              contract_start_date:
+                  type: string
+                  format: date
+                  description: "Date contract starts"
+                  example: "2019-01-01"
+              contract_end_date:
+                  type: string
+                  format: date
+                  description: "Date contract ends"
+                  example: "2020-01-01"
+              currency:
+                  type: string
+                  minLength: 3
+                  maxLength: 3
+                  description: "Currency of target and incentive_amount"
+                  example: "USD"
+              target:
+                  type: number
+                  minimum: 1
+                  description: "Target to start earning incentives"
+                  example: 10000
+              target_calculation:
+                  type: string
+                  enum: [TTV_TAX, TTV_PRE_TAX]
+                  description: "How target should be calculated"
+                  example: TTV_PRE_TAX
+              incentive_model:
+                  type: string
+                  enum: [TTV_PERCENTAGE, PER_BOOKED_SEGMENT]
+                  description: "Incentive data type"
+                  example: TTV_PERCENTAGE
+              incentive_amount:
+                  type: number
+                  minimum: 1
+                  description: "Incentive amount or percentage"
+                  example: 3
+              applicable_iatas:
+                  type: array
+                  description: IATA(s) this contract applies to
+                  items:
+                      type: string
+                      enum: [2G3C, 123]
+                      description: IATA
+                      example: 2G3C
+              comment:
+                  type: string
+                  description: additional information
+      CreateAirlineIncentiveResponse:
+          title: Response
+          type: object
+          properties:
+              contract_reference:
+                  type: string
+                  description: "Contract reference ID"
+                  example: "BA83762349"
+      CreateAirlineIncentiveErrorCodes:
+          title: Error Codes
+          type: object
+          properties:
+              status:
+                  type: string
+                  description: status code
+                  example: 400-1001
+              errors:
+                  type: array
+                  description: List of errors
+                  items:
+                      type: object
+                      properties:
+                          description:
+                              type: string
+                              description: error description
+                              example: applicable_iatas is not valid. Must be one of [2G3C, 123]
+
+      UpdateAirlineIncentiveRequest:
+          title: UpdateAirlineIncentiveRequest
+          type: object
+          required:
+              - contract_reference
+          properties:
+              contract_reference:
+                  type: string
+                  description: "Contract reference ID"
+                  example: "BA83762349"
+              contract_applies_to:
+                  type: string
+                  enum: [FLOWN, BOOKED]
+                  description: "Flight status this contract applies to. "
+                  example: "flown"
+              contract_start_date:
+                  type: string
+                  format: date
+                  description: "Date contract starts"
+                  example: "2019-01-01"
+              contract_end_date:
+                  type: string
+                  format: date
+                  description: "Date contract ends"
+                  example: "2020-01-01"
+              currency:
+                  type: string
+                  minLength: 3
+                  maxLength: 3
+                  description: "Currency of target and incentive_amount"
+                  example: "USD"
+              target:
+                  type: number
+                  minimum: 1
+                  description: "Target to start earning incentives"
+                  example: 10000
+              target_calculation:
+                  type: string
+                  enum: [TTV_TAX, TTV_PRE_TAX]
+                  description: "How target should be calculated"
+                  example: TTV_TAX
+              incentive_model:
+                  type: string
+                  enum: [TTV_PERCENTAGE, PER_BOOKED_SEGMENT]
+                  description: "Incentive data type"
+                  example: PER_BOOKED_SEGMENT
+              incentive_amount:
+                  type: number
+                  minimum: 1
+                  description: "Incentive amount or percentage"
+                  example: 5
+              applicable_iatas:
+                  type: array
+                  description: IATA(s) this contract applies to
+                  items:
+                      type: string
+                      enum: [2G3C, 123]
+                      description: IATA
+                      example: 2G3C
+              comment:
+                  type: string
+                  description: additional information
+      UpdateAirlineIncentiveResponse:
+          title: Response
+          type: object
+          properties:
+              status:
+                  type: string
+                  description: message
+                  example: successfully updated
+
+      DeleteAirlineIncentiveRequest:
+          title: DeleteAirlineIncentiveRequest
+          type: object
+          required:
+              - contract_reference
+          properties:
+              contract_reference:
+                  type: string
+                  description: "Contract reference ID"
+                  example: "BA83762349"
+      DeleteAirlineIncentiveResponse:
+          title: Response
+          type: object
+          properties:
+              status:
+                  type: string
+                  description: message
+                  example: successfully deleted
+      UpdateDeleteErrorCodes:
+          title: Error Codes
+          type: object
+          properties:
+              status:
+                  type: string
+                  description: status code
+                  example: 400-3003
+              errors:
+                  type: array
+                  description: List of errors
+                  items:
+                      type: object
+                      properties:
+                          description:
+                              type: string
+                              description: error description
+                              example: Contract reference ID not found

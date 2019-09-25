@@ -307,18 +307,24 @@ components:
                                   properties:
                                       origin:
                                           type: string
+                                          minLength: 3
+                                          maxLength: 3
                                           description: "IATA code of origin location."
                                           example: "JFK"
                                       destination:
                                           type: string
+                                          minLength: 3
+                                          maxLength: 3
                                           description: "IATA code of destination location."
                                           example: "LGW"
                                       departure_date:
                                           type: string
+                                          format: date-time
                                           description: "Departure date and time with timezone."
                                           example: "2019-11-05T07:00:00.000-08:00"
                                       arrival_date:
                                           type: string
+                                          format: date-time
                                           description: "Arrival date and time with timezone."
                                           example: "2019-11-08T07:00:00.000-08:00"
                                       cabin:
@@ -327,6 +333,8 @@ components:
                                           example: "E"
                                       carrier:
                                           type: string
+                                          minLength: 2
+                                          maxLength: 2
                                           description: "Airline carrier of the flight."
                                           example: "AC"
                                       flight_number:
