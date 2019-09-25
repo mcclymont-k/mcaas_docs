@@ -62,7 +62,7 @@ paths:
 #                    content:
 #                        application/json:
 #                            schema:
-#                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+#                                $ref: '#/components/schemas/BasicSuccessful'
 #                400:
 #                    description: Invalid input
 #                    content:
@@ -71,6 +71,18 @@ paths:
 #                                $ref: '#/components/schemas/CreateRecordErrorCodes'
 
     /incentive/airline/:
+        get:
+            summary: "List Airline Incentives"
+            description: |
+                Get list of Airline Incentives
+            operationId: GetAirlineIncentives
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetAirlineIncentiveResponse'
         post:
             summary: "Create Airline Incentive"
             description: |
@@ -110,7 +122,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -133,7 +145,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -142,6 +154,18 @@ paths:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
 
     /incentive/gds/:
+        get:
+            summary: "List GDS Incentives"
+            description: |
+                Get list of GDS Incentives
+            operationId: GetGDSIncentive
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetGDSIncentiveResponse'
         post:
             summary: "Create GDS Incentive"
             description: |
@@ -181,7 +205,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -204,7 +228,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -214,6 +238,18 @@ paths:
 
 
     /revenue/attachment/:
+        get:
+            summary: "List Attachment Revenues"
+            description: |
+                Get list of Attachment Revenues
+            operationId: GetAttachmentRevenue
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetAttachmentRevenueResponse'
         post:
             summary: "Create Attachment Revenue"
             description: |
@@ -253,7 +289,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -276,7 +312,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -286,6 +322,18 @@ paths:
 
 
     /cost/source/:
+        get:
+            summary: "List Source Costs"
+            description: |
+                Get list of Source Costs
+            operationId: GetSourceCost
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetSourceCostResponse'
         post:
             summary: "Create Source Cost"
             description: |
@@ -325,7 +373,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -348,7 +396,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -357,6 +405,18 @@ paths:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
 
     /cost/metasearch/:
+        get:
+            summary: "List Metasearch Costs"
+            description: |
+                Get list of Metasearch Costs
+            operationId: GetMetasearchCost
+            responses:
+                200:
+                    description: Success
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/GetMetasearchCostResponse'
         post:
             summary: "Create Metasearch Cost"
             description: |
@@ -396,7 +456,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -419,7 +479,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/BasicSuccessfulResponse'
+                                $ref: '#/components/schemas/BasicSuccessful'
                 400:
                     description: Invalid input
                     content:
@@ -530,7 +590,7 @@ components:
           description: "Cost Model"
           example: LOOK_TO_BOOK
 
-      BasicSuccessfulResponse:
+      BasicSuccessful:
           title: Response
           type: object
           properties:
@@ -539,20 +599,8 @@ components:
                   description: message
                   example: successful
 
-      CreateAirlineIncentiveRequest:
-          title: CreateAirlineIncentiveRequest
+      BasicAirlineIncentive:
           type: object
-          required:
-              - airline_name
-              - contract_applies_to
-              - contract_start_date
-              - contract_end_date
-              - currency
-              - target
-              - target_calculation
-              - incentive_amount
-              - incentive_model
-              - applicable_iatas
           properties:
               airline_name:
                   type: string
@@ -580,17 +628,29 @@ components:
                   $ref: '#/components/schemas/applicable_iatas'
               comment:
                   $ref: '#/components/schemas/comment'
-      CreateGDSIncentiveRequest:
-          title: Create GDS Incentive Request
+
+      GetAirlineIncentiveResponse:
+          type: array
+          items:
+              $ref: '#/components/schemas/BasicAirlineIncentive'
+
+      CreateAirlineIncentiveRequest:
+          allOf:
+              - $ref: '#/components/schemas/BasicAirlineIncentive'
+              - required:
+                  - airline_name
+                  - contract_applies_to
+                  - contract_start_date
+                  - contract_end_date
+                  - currency
+                  - target
+                  - target_calculation
+                  - incentive_amount
+                  - incentive_model
+                  - applicable_iatas
+
+      BasicGDSIncentive:
           type: object
-          required:
-              - gds_name
-              - applicable_airlines
-              - segment_fees
-              - currency
-              - contract_start_date
-              - contract_end_date
-              - applicable_iatas
           properties:
               gds_name:
                   type: string
@@ -610,16 +670,27 @@ components:
                   $ref: '#/components/schemas/applicable_iatas'
               comment:
                   $ref: '#/components/schemas/comment'
-      CreateAttachmentRevenueRequest:
-          title: Create Attachment Revenue Request
+
+      GetGDSIncentiveResponse:
+          type: array
+          items:
+              $ref: '#/components/schemas/BasicAirlineIncentive'
+
+      CreateGDSIncentiveRequest:
+          allOf:
+              - $ref: '#/components/schemas/BasicGDSIncentive'
+              - required:
+                    - gds_name
+                    - applicable_airlines
+                    - segment_fees
+                    - currency
+                    - contract_start_date
+                    - contract_end_date
+                    - applicable_iatas
+
+
+      BasicAttachmentRevenue:
           type: object
-          required:
-              - type_of_attachment
-              - region
-              - model
-              - amount
-              - currency
-              - applicable_iatas
           properties:
               type_of_attachment:
                   type: string
@@ -638,17 +709,25 @@ components:
               comment:
                   $ref: '#/components/schemas/comment'
 
-      CreateSourceCostRequest:
+      GetAttachmentRevenueResponse:
+          type: array
+          items:
+              $ref: '#/components/schemas/BasicAirlineIncentive'
+
+      CreateAttachmentRevenueRequest:
+          allOf:
+              - $ref: '#/components/schemas/BasicAttachmentRevenue'
+              - required:
+                    - type_of_attachment
+                    - region
+                    - model
+                    - amount
+                    - currency
+                    - applicable_iatas
+
+      BasicSourceCost:
           title: Create Source Cost Request
           type: object
-          required:
-              - data_source
-              - model
-              - amount
-              - currency
-              - contract_start_date
-              - contract_end_date
-              - applicable_iatas
           properties:
               data_source:
                   type: string
@@ -671,17 +750,25 @@ components:
               comment:
                   $ref: '#/components/schemas/comment'
 
-      CreateMetasearchCostRequest:
-          title: Create Meta Search Cost Request
+      GetSourceCostResponse:
+          type: array
+          items:
+              $ref: '#/components/schemas/BasicAirlineIncentive'
+
+      CreateSourceCostRequest:
+          allOf:
+              - $ref: '#/components/schemas/BasicSourceCost'
+              - required:
+                    - data_source
+                    - model
+                    - amount
+                    - currency
+                    - contract_start_date
+                    - contract_end_date
+                    - applicable_iatas
+
+      BasicMetasearchCost:
           type: object
-          required:
-              - metasearch
-              - model
-              - amount
-              - currency
-              - contract_start_date
-              - contract_end_date
-              - applicable_iatas
           properties:
               metasearch:
                   type: string
@@ -701,6 +788,23 @@ components:
                   $ref: '#/components/schemas/applicable_iatas'
               comment:
                   $ref: '#/components/schemas/comment'
+
+      GetMetasearchCostResponse:
+          type: array
+          items:
+              $ref: '#/components/schemas/BasicAirlineIncentive'
+
+      CreateMetasearchCostRequest:
+          allOf:
+              - $ref: '#/components/schemas/BasicMetasearchCost'
+              - required:
+                    - metasearch
+                    - model
+                    - amount
+                    - currency
+                    - contract_start_date
+                    - contract_end_date
+                    - applicable_iatas
 
       CreateRecordResponse:
           title: Response
