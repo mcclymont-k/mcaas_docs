@@ -155,27 +155,27 @@ paths:
 
     /incentive/gds/:
         get:
-            summary: "List GDS Incentives"
+            summary: "List DataSource Incentives"
             description: |
-                Get list of GDS Incentives
-            operationId: GetGDSIncentive
+                Get list of DataSource Incentives
+            operationId: GetDataSourceIncentive
             responses:
                 200:
                     description: Success
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetGDSIncentiveResponse'
+                                $ref: '#/components/schemas/GetDataSourceIncentiveResponse'
         post:
-            summary: "Create GDS Incentive"
+            summary: "Create DataSource Incentive"
             description: |
-                Create an GDS Incentive
-            operationId: CreateGDSIncentive
+                Create an DataSource Incentive
+            operationId: CreateDataSourceIncentive
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/CreateGDSIncentiveRequest'
+                            $ref: '#/components/schemas/CreateDataSourceIncentiveRequest'
             responses:
                 200:
                     description: Success
@@ -190,15 +190,15 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/CreateRecordErrorCodes'
         patch:
-            summary: "Update GDS Incentive"
+            summary: "Update DataSource Incentive"
             description: |
-                Update an GDS Incentive
-            operationId: UpdateGDSIncentive
+                Update an DataSource Incentive
+            operationId: UpdateDataSourceIncentive
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/UpdateGDSIncentiveRequest'
+                            $ref: '#/components/schemas/UpdateDataSourceIncentiveRequest'
             responses:
                 200:
                     description: Success
@@ -213,10 +213,10 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
         delete:
-            summary: "Delete GDS Incentive"
+            summary: "Delete DataSource Incentive"
             description: |
-                Delete an GDS Incentive
-            operationId: DeleteGDSIncentive
+                Delete an DataSource Incentive
+            operationId: DeleteDataSourceIncentive
             requestBody:
                 content:
                     application/json:
@@ -492,14 +492,14 @@ components:
   schemas:
       applicable_iatas:
           type: array
-          description: IATA Registry Number(s) this contract applies to
+          description: "IATA Registry Number(s) or officeIDs contracts are divided by"
           items:
               type: string
               description: IATA
               example: 2G3C
       comment:
           type: string
-          description: additional information
+          description: "Anything that was not properly covered for this agreement"
           example: some information
       contract_start_date:
           type: string
@@ -545,7 +545,7 @@ components:
           minimum: 1
           description: "Target to start earning incentives"
           example: 10000
-      target_calculation:
+      target_calculation_based_on:
           type: string
           enum: [TTV_TAX, TTV_PRE_TAX]
           description: "How target should be calculated"
@@ -558,11 +558,11 @@ components:
       incentive_amount:
           type: number
           minimum: 1
-          description: "Incentive amount or percentage"
+          description: "Amount of the incentive is either a percentage or a per booked segment fee."
           example: 3
       region:
           type: string
-          description: "region could be city iata, province, country, or Global"
+          description: "region could be City IATA code, Province, Country, or Global"
           example: "Nova Scotia"
       revenue_amount:
           type: number
@@ -589,6 +589,24 @@ components:
           enum: [SEGMENT, BOOKING, PASSENGER, LOOK_TO_BOOK]
           description: "Cost Model"
           example: LOOK_TO_BOOK
+      excluded_classes:
+          type: string
+          enum: [ECONOMY, PREMIUM_ECONOMY, BUSINESS, FIRST, PREMIUM_FIRST]
+          description: "List of flight classes to exclude."
+          example: ECONOMY
+      excluded_countries:
+          type: string
+          description: "Country Name"
+          example: "Australia"
+      excluded_destination_iatas:
+          type: array
+          example: ["SFO", "LON"]
+          items:
+              type: string
+              minLength: 3
+              maxLength: 3
+              description: "Destination IATAs where this incentive contract does not apply."
+              example: "MEL"
 
       BasicSuccessful:
           title: Response
@@ -606,7 +624,7 @@ components:
                   type: string
                   minLength: 2
                   maxLength: 2
-                  description: "Airline that contract is for"
+                  description: "Airline code this incentive contract applies to"
                   example: "BA"
               contract_applies_to:
                   $ref: '#/components/schemas/model'
@@ -618,12 +636,18 @@ components:
                   $ref: '#/components/schemas/currency'
               target:
                   $ref: '#/components/schemas/target'
-              target_calculation:
-                  $ref: '#/components/schemas/target_calculation'
+              target_calculation_based_on:
+                  $ref: '#/components/schemas/target_calculation_based_on'
               incentive_model:
                   $ref: '#/components/schemas/incentive_model'
               incentive_amount:
                   $ref: '#/components/schemas/incentive_amount'
+              excluded_classes:
+                  $ref: '#/components/schemas/excluded_classes'
+              excluded_countries:
+                  $ref: '#/components/schemas/excluded_countries'
+              excluded_destination_iatas:
+                  $ref: '#/components/schemas/excluded_destination_iatas'
               applicable_iatas:
                   $ref: '#/components/schemas/applicable_iatas'
               comment:
@@ -644,17 +668,17 @@ components:
                   - contract_end_date
                   - currency
                   - target
-                  - target_calculation
+                  - target_calculation_based_on
                   - incentive_amount
                   - incentive_model
                   - applicable_iatas
 
-      BasicGDSIncentive:
+      BasicDataSourceIncentive:
           type: object
           properties:
               gds_name:
                   type: string
-                  description: "GDS that contract is for"
+                  description: "GDS or any other DataSource that contract is for"
                   example: "Sabre"
               applicable_airlines:
                   $ref: '#/components/schemas/applicable_airlines'
@@ -671,14 +695,14 @@ components:
               comment:
                   $ref: '#/components/schemas/comment'
 
-      GetGDSIncentiveResponse:
+      GetDataSourceIncentiveResponse:
           type: array
           items:
               $ref: '#/components/schemas/BasicAirlineIncentive'
 
-      CreateGDSIncentiveRequest:
+      CreateDataSourceIncentiveRequest:
           allOf:
-              - $ref: '#/components/schemas/BasicGDSIncentive'
+              - $ref: '#/components/schemas/BasicDataSourceIncentive'
               - required:
                     - gds_name
                     - applicable_airlines
@@ -694,7 +718,7 @@ components:
           properties:
               type_of_attachment:
                   type: string
-                  description: "Attachment which revenue applies to"
+                  description: "Type of attachment which revenue applies to"
                   example: "Hotel"
               region:
                   $ref: '#/components/schemas/region'
@@ -846,11 +870,13 @@ components:
               contract_end_date:
                   $ref: '#/components/schemas/contract_end_date'
               currency:
-                  $ref: '#/components/schemas/currency'
+                  allOf:
+                      - $ref: '#/components/schemas/currency'
+                      - description: "The currency of the incentive"
               target:
                   $ref: '#/components/schemas/target'
-              target_calculation:
-                  $ref: '#/components/schemas/target_calculation'
+              target_calculation_based_on:
+                  $ref: '#/components/schemas/target_calculation_based_on'
               incentive_model:
                   $ref: '#/components/schemas/incentive_model'
               incentive_amount:
@@ -859,8 +885,8 @@ components:
                   $ref: '#/components/schemas/applicable_iatas'
               comment:
                   $ref: '#/components/schemas/comment'
-      UpdateGDSIncentiveRequest:
-          title: Update GDS Incentive Request
+      UpdateDataSourceIncentiveRequest:
+          title: Update DataSource Incentive Request
           type: object
           required:
               - contract_reference
