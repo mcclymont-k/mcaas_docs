@@ -74,7 +74,7 @@ paths:
         get:
             summary: "List Airline Incentives"
             description: |
-                Get list of Airline Incentives
+                Get list of airline incentive contracts
             operationId: GetAirlineIncentives
             responses:
                 200:
@@ -86,7 +86,7 @@ paths:
         post:
             summary: "Create Airline Incentive"
             description: |
-                Create an Airline Incentive
+                Create an airline incentive contract
             operationId: CreateAirlineIncentive
             requestBody:
                 content:
@@ -109,7 +109,7 @@ paths:
         patch:
             summary: "Update Airline Incentive"
             description: |
-                Update an Airline Incentive
+                Update an airline incentive contract
             operationId: UpdateAirlineIncentive
             requestBody:
                 content:
@@ -132,7 +132,7 @@ paths:
         delete:
             summary: "Delete Airline Incentive"
             description: |
-                Delete an Airline Incentive
+                Delete an airline incentive contract
             operationId: DeleteAirlineIncentive
             requestBody:
                 content:
@@ -155,27 +155,27 @@ paths:
 
     /incentive/gds/:
         get:
-            summary: "List DataSource Incentives"
+            summary: "List GDS Incentives"
             description: |
-                Get list of DataSource Incentives
-            operationId: GetDataSourceIncentive
+                Get list of GDS incentives contracts
+            operationId: GetGDSIncentive
             responses:
                 200:
                     description: Success
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetDataSourceIncentiveResponse'
+                                $ref: '#/components/schemas/GetGDSIncentiveResponse'
         post:
-            summary: "Create DataSource Incentive"
+            summary: "Create GDS Incentive"
             description: |
-                Create an DataSource Incentive
-            operationId: CreateDataSourceIncentive
+                Create a GDS incentives contract
+            operationId: CreateGDSIncentive
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/CreateDataSourceIncentiveRequest'
+                            $ref: '#/components/schemas/CreateGDSIncentiveRequest'
             responses:
                 200:
                     description: Success
@@ -190,15 +190,15 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/CreateRecordErrorCodes'
         patch:
-            summary: "Update DataSource Incentive"
+            summary: "Update GDS Incentive"
             description: |
-                Update an DataSource Incentive
-            operationId: UpdateDataSourceIncentive
+                Update a GDS incentives contract
+            operationId: UpdateGDSIncentive
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/UpdateDataSourceIncentiveRequest'
+                            $ref: '#/components/schemas/UpdateGDSIncentiveRequest'
             responses:
                 200:
                     description: Success
@@ -213,10 +213,10 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
         delete:
-            summary: "Delete DataSource Incentive"
+            summary: "Delete GDS Incentive"
             description: |
-                Delete an DataSource Incentive
-            operationId: DeleteDataSourceIncentive
+                Delete a GDS incentives contract
+            operationId: DeleteGDSIncentive
             requestBody:
                 content:
                     application/json:
@@ -241,7 +241,7 @@ paths:
         get:
             summary: "List Attachment Revenues"
             description: |
-                Get list of Attachment Revenues
+                Get list of attachment revenues
             operationId: GetAttachmentRevenue
             responses:
                 200:
@@ -253,7 +253,7 @@ paths:
         post:
             summary: "Create Attachment Revenue"
             description: |
-                Create an attachment revenue
+                Create a attachment revenue
             operationId: CreateAttachmentRevenue
             requestBody:
                 content:
@@ -276,7 +276,7 @@ paths:
         patch:
             summary: "Update Attachment Revenue"
             description: |
-                Update an Attachment Revenue
+                Update a attachment revenue
             operationId: UpdateAttachmentRevenue
             requestBody:
                 content:
@@ -299,7 +299,7 @@ paths:
         delete:
             summary: "Delete Attachment Revenue"
             description: |
-                Delete an Attachment Revenue
+                Delete a attachment revenue
             operationId: DeleteAttachmentRevenue
             requestBody:
                 content:
@@ -323,27 +323,27 @@ paths:
 
     /cost/source/:
         get:
-            summary: "List Source Costs"
+            summary: "List Data Source Costs"
             description: |
-                Get list of Source Costs
-            operationId: GetSourceCost
+                list GDS and other data sources cost contracts
+            operationId: GetDataSourceCost
             responses:
                 200:
                     description: Success
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/GetSourceCostResponse'
+                                $ref: '#/components/schemas/GetDataSourceCostResponse'
         post:
-            summary: "Create Source Cost"
+            summary: "Create Data Source Cost"
             description: |
-                Create an Source Cost
-            operationId: CreateSourceCost
+                Create a data source cost contract
+            operationId: CreateDataSourceCost
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/CreateSourceCostRequest'
+                            $ref: '#/components/schemas/CreateDataSourceCostRequest'
             responses:
                 200:
                     description: Success
@@ -358,15 +358,15 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/CreateRecordErrorCodes'
         patch:
-            summary: "Update Source Cost"
+            summary: "Update Data Source Cost"
             description: |
-                Update an Source Cost
-            operationId: UpdateSourceCost
+                Update a data sources cost contract
+            operationId: UpdateDataSourceCost
             requestBody:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/UpdateSourceCostRequest'
+                            $ref: '#/components/schemas/UpdateDataSourceCostRequest'
             responses:
                 200:
                     description: Success
@@ -381,10 +381,10 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
         delete:
-            summary: "Delete Source Cost"
+            summary: "Delete Data Source Cost"
             description: |
-                Delete an Source Cost
-            operationId: Delete Source Cost
+                Delete a data sources cost contract
+            operationId: DeleteDataSourceCost
             requestBody:
                 content:
                     application/json:
@@ -408,7 +408,7 @@ paths:
         get:
             summary: "List Metasearch Costs"
             description: |
-                Get list of Metasearch Costs
+                Get list of metasearch cost contracts
             operationId: GetMetasearchCost
             responses:
                 200:
@@ -420,7 +420,7 @@ paths:
         post:
             summary: "Create Metasearch Cost"
             description: |
-                Create an Metasearch Cost
+                Create a metasearch cost contract
             operationId: CreateMetasearchCost
             requestBody:
                 content:
@@ -443,7 +443,7 @@ paths:
         patch:
             summary: "Update Metasearch Cost"
             description: |
-                Update an Metasearch Cost
+                Update a metasearch cost contract
             operationId: UpdateMetasearchCost
             requestBody:
                 content:
@@ -466,7 +466,7 @@ paths:
         delete:
             summary: "Delete Metasearch Cost"
             description: |
-                Delete an Metasearch Cost
+                Delete a metasearch cost contract
             operationId: Delete Metasearch Cost
             requestBody:
                 content:
@@ -586,7 +586,7 @@ components:
           example: PER_CLICK
       source_cost_model:
           type: string
-          enum: [SEGMENT, BOOKING, PASSENGER, LOOK_TO_BOOK]
+          enum: [SEGMENT, BOOKING, PASSENGER, FLAT_FEE, LOOK_TO_BOOK]
           description: "Cost Model"
           example: LOOK_TO_BOOK
       excluded_classes:
@@ -673,12 +673,12 @@ components:
                   - incentive_model
                   - applicable_iatas
 
-      BasicDataSourceIncentive:
+      BasicGDSIncentive:
           type: object
           properties:
               gds_name:
                   type: string
-                  description: "GDS or any other DataSource that contract is for"
+                  description: "GDS or any other GDS that contract is for"
                   example: "Sabre"
               applicable_airlines:
                   $ref: '#/components/schemas/applicable_airlines'
@@ -695,14 +695,14 @@ components:
               comment:
                   $ref: '#/components/schemas/comment'
 
-      GetDataSourceIncentiveResponse:
+      GetGDSIncentiveResponse:
           type: array
           items:
               $ref: '#/components/schemas/BasicAirlineIncentive'
 
-      CreateDataSourceIncentiveRequest:
+      CreateGDSIncentiveRequest:
           allOf:
-              - $ref: '#/components/schemas/BasicDataSourceIncentive'
+              - $ref: '#/components/schemas/BasicGDSIncentive'
               - required:
                     - gds_name
                     - applicable_airlines
@@ -749,7 +749,7 @@ components:
                     - currency
                     - applicable_iatas
 
-      BasicSourceCost:
+      BasicDataSourceCost:
           title: Create Source Cost Request
           type: object
           properties:
@@ -774,14 +774,14 @@ components:
               comment:
                   $ref: '#/components/schemas/comment'
 
-      GetSourceCostResponse:
+      GetDataSourceCostResponse:
           type: array
           items:
               $ref: '#/components/schemas/BasicAirlineIncentive'
 
-      CreateSourceCostRequest:
+      CreateDataSourceCostRequest:
           allOf:
-              - $ref: '#/components/schemas/BasicSourceCost'
+              - $ref: '#/components/schemas/BasicDataSourceCost'
               - required:
                     - data_source
                     - model
@@ -885,8 +885,8 @@ components:
                   $ref: '#/components/schemas/applicable_iatas'
               comment:
                   $ref: '#/components/schemas/comment'
-      UpdateDataSourceIncentiveRequest:
-          title: Update DataSource Incentive Request
+      UpdateGDSIncentiveRequest:
+          title: Update GDS Incentive Request
           type: object
           required:
               - contract_reference
@@ -929,7 +929,7 @@ components:
               comment:
                   $ref: '#/components/schemas/comment'
 
-      UpdateSourceCostRequest:
+      UpdateDataSourceCostRequest:
           title: Update Source Cost Request
           type: object
           required:
