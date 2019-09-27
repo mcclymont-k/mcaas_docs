@@ -157,7 +157,7 @@ paths:
         get:
             summary: "List Data Source Incentives"
             description: |
-                Get list of incentives contracts for GDS and other datasources
+                Get list of incentive contracts for GDS and other datasources
             operationId: GetGDSIncentive
             responses:
                 200:
