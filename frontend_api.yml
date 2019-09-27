@@ -153,11 +153,11 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
 
-    /incentive/gds/:
+    /incentive/datasource/:
         get:
-            summary: "List GDS Incentives"
+            summary: "List Data Source Incentives"
             description: |
-                Get list of GDS incentives contracts
+                Get list of incentives contracts for GDS and other datasources
             operationId: GetGDSIncentive
             responses:
                 200:
@@ -167,9 +167,9 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/GetGDSIncentiveResponse'
         post:
-            summary: "Create GDS Incentive"
+            summary: "Create Data Source Incentive"
             description: |
-                Create a GDS incentives contract
+                Create an incentives contract for a GDS or any other datasource
             operationId: CreateGDSIncentive
             requestBody:
                 content:
@@ -190,9 +190,9 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/CreateRecordErrorCodes'
         patch:
-            summary: "Update GDS Incentive"
+            summary: "Update Data Source Incentive"
             description: |
-                Update a GDS incentives contract
+                Update a Data Source incentives contract
             operationId: UpdateGDSIncentive
             requestBody:
                 content:
@@ -213,9 +213,9 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
         delete:
-            summary: "Delete GDS Incentive"
+            summary: "Delete Data Source Incentive"
             description: |
-                Delete a GDS incentives contract
+                Delete a Data Source incentives contract
             operationId: DeleteGDSIncentive
             requestBody:
                 content:
@@ -321,11 +321,11 @@ paths:
                                 $ref: '#/components/schemas/UpdateDeleteErrorCodes'
 
 
-    /cost/source/:
+    /cost/datasource/:
         get:
             summary: "List Data Source Costs"
             description: |
-                list GDS and other data sources cost contracts
+                list cost contracts for GDS and other data sources
             operationId: GetDataSourceCost
             responses:
                 200:
@@ -337,7 +337,7 @@ paths:
         post:
             summary: "Create Data Source Cost"
             description: |
-                Create a data source cost contract
+                Create a cost contract for GDS or any other datasource
             operationId: CreateDataSourceCost
             requestBody:
                 content:
@@ -360,7 +360,7 @@ paths:
         patch:
             summary: "Update Data Source Cost"
             description: |
-                Update a data sources cost contract
+                Update a datasource cost contract
             operationId: UpdateDataSourceCost
             requestBody:
                 content:
@@ -383,7 +383,7 @@ paths:
         delete:
             summary: "Delete Data Source Cost"
             description: |
-                Delete a data sources cost contract
+                Delete a datasource cost contract
             operationId: DeleteDataSourceCost
             requestBody:
                 content:
