@@ -283,8 +283,9 @@ components:
                               example: "travelport"
                           cabin:
                               type: string
+                              enum: [E, PE, BC, FC, PFC]
                               description: "Cabin class for the itinerary."
-                              example: "E"
+                              example: E
                           operating_airline:
                               type: string
                               description: "Airline operating this itinerary."

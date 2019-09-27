@@ -590,14 +590,20 @@ components:
           description: "Cost Model"
           example: LOOK_TO_BOOK
       excluded_classes:
-          type: string
-          enum: [ECONOMY, PREMIUM_ECONOMY, BUSINESS, FIRST, PREMIUM_FIRST]
-          description: "List of flight classes to exclude."
-          example: ECONOMY
+          type: array
+          example: [E, FC]
+          items:
+              type: string
+              enum: [E, PE, BC, FC, PFC]
+              description: "List of flight classes to exclude."
+              example: E
       excluded_countries:
-          type: string
-          description: "Country Name"
-          example: "Australia"
+          type: array
+          example: ["Australia", "Germany"]
+          items:
+              type: string
+              description: "Country Name"
+              example: "Australia"
       excluded_destination_iatas:
           type: array
           example: ["SFO", "LON"]
