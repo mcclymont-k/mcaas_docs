@@ -626,7 +626,7 @@ components:
       BasicAirlineIncentive:
           type: object
           properties:
-              airline_name:
+              airline:
                   type: string
                   minLength: 2
                   maxLength: 2
@@ -668,7 +668,7 @@ components:
           allOf:
               - $ref: '#/components/schemas/BasicAirlineIncentive'
               - required:
-                  - airline_name
+                  - airline
                   - contract_applies_to
                   - contract_start_date
                   - contract_end_date
@@ -682,7 +682,7 @@ components:
       BasicGDSIncentive:
           type: object
           properties:
-              gds_name:
+              datasource:
                   type: string
                   description: "GDS or any other GDS that contract is for"
                   example: "Sabre"
@@ -710,7 +710,7 @@ components:
           allOf:
               - $ref: '#/components/schemas/BasicGDSIncentive'
               - required:
-                    - gds_name
+                    - datasource
                     - applicable_airlines
                     - segment_fees
                     - currency
