@@ -237,7 +237,7 @@ components:
               os:
                   type: string
                   required: false
-                  description: "Operating system of user. Desktop/mobile/android/iOS."
+                  description: "Operating system of user. Windows/OSX/android/iOS."
                   example: "iOS"
               itineraries:
                   description: "Array of itineraries."
@@ -387,8 +387,8 @@ components:
             itinerary_reference:
                 type: integer
                 description: |
-                    This is the itinerary idendifier on which price confirm performed. And is returned on the
-                    markup(post) call at the itinerary level
+                    This is the itinerary identifier on which price confirm is performed, and is returned on the
+                    markup(post) call at the itinerary level.
                 example: 1
       BookingCancellationProfileRequest:
         title: Request
@@ -405,8 +405,8 @@ components:
             itinerary_reference:
                 type: integer
                 description: |
-                    This is the itinerary idendifier on which price confirm performed. And is returned on the
-                    markup(post) call at the itinerary level
+                    This is the itinerary identifier on which price confirm is performed, and is returned on the
+                    markup(post) call at the itinerary level.
                 example: 1
             canceled:
                 type: boolean
@@ -457,8 +457,8 @@ components:
             itinerary_reference:
                 type: integer
                 description: |
-                    This is the itinerary idendifier on which price confirm performed. And is returned on the
-                    markup(post) call at the itinerary level
+                    This is the itinerary identifier on which price confirm is performed, and is returned on the
+                    markup(post) call at the itinerary level.
                 example: 1
       MarkupOverrideResponse:
         title: Response
