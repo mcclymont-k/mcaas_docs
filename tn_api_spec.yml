@@ -41,9 +41,6 @@ info:
   x-logo:
     url: 'https://s3.amazonaws.com/tn-api-docs/tripninja_logo_dev-01.png'
     altText: Trip Ninja logo
-servers:
-  - url: 
-    description: Production thingies
 
 paths:
     /markup/:
