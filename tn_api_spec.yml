@@ -4,7 +4,7 @@ info:
   version: "1.0.0"
   title: MCaaS Documentation
   description: |
-    # Introduction
+    # Newly changed
     Trip Ninja uses a REST API with requests and responses in JSON format. For development and testing, the pre-production url
     is to be used. Once ready for live use, access to the production url will be provided. <br  />
 
@@ -42,7 +42,7 @@ info:
     url: 'https://s3.amazonaws.com/tn-api-docs/tripninja_logo_dev-01.png'
     altText: Trip Ninja logo
 servers:
-  - url: 'here'
+  - url: we did it
     description: Production thingies
 
 paths:
